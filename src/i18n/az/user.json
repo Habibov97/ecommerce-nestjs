@@ -1,0 +1,7 @@
+{
+  "response": {
+    "created": "Istifadeci ugurla yaradildi",
+    "updated": "Istifadeci ugurla redakde olundu",
+    "notFound": "Bu {id} de istifadeci tapilmadi"
+  }
+}
