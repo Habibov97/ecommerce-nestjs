@@ -10,10 +10,13 @@ import { Request } from 'express';
 
 import { UserService } from 'src/modules/user/user.service';
 import { JwtAuthPayload } from './auth-guard.types';
+import { UserRole } from '@prisma/client';
+import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
+    private reflector: Reflector,
     private jwtService: JwtService,
     private userService: UserService,
   ) {}
@@ -31,12 +34,20 @@ export class AuthGuard implements CanActivate {
       const user = await this.userService.userById(payload.userId);
       if (!user) throw new Error();
 
+      const roles = this.reflector.get<UserRole[]>(
+        'roles',
+        context.getHandler(),
+      );
+      if (roles && !roles.includes(user.role)) {
+        throw new ForbiddenException('Forbidden');
+      }
+
       return true;
     } catch (error) {
       if (error instanceof ForbiddenException) {
         throw error;
       }
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Unauthorized');
     }
   }
 }

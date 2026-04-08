@@ -9,22 +9,22 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String?   @unique 
-  password  String
-  phone String? @unique
-  provider UserProvider @default(LOCAL)
-  providerId String?
+  id           Int           @id @default(autoincrement())
+  email        String?       @unique
+  password     String
+  phone        String?       @unique
+  provider     UserProvider  @default(LOCAL)
+  providerId   String?
   providerType ProviderType? @default(EMAIL)
-  role      UserRole @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role         UserRole      @default(USER)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 enum ProviderType {
@@ -42,4 +42,47 @@ enum UserProvider {
 enum UserRole {
   ADMIN
   USER
+}
+
+model Category {
+  id   Int     @id @default(autoincrement())
+  name String  @unique
+  slug String?
+
+  parentId Int?
+  parent   Category? @relation("ParentCategory", fields: [parentId], references: [id], onDelete: Cascade)
+
+  children Category[] @relation("ParentCategory")
+
+  products Product[]
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+
+  title       String
+  slug        String
+  description String
+
+  categories Category[]
+
+  specs ProductSpec[]
+}
+
+model ProductSpec {
+  id        Int                @id @default(autoincrement())
+  key       String
+  name      String
+  values    ProductSpecValue[]
+  Product   Product?           @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+model ProductSpecValue {
+  id Int @id @default(autoincrement())
+
+  key           String
+  value         String
+  ProductSpec   ProductSpec? @relation(fields: [productSpecId], references: [id])
+  productSpecId Int?
 }
