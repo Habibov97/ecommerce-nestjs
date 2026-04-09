@@ -49,8 +49,8 @@ model Category {
   name String  @unique
   slug String?
 
-  parentId Int?
   parent   Category? @relation("ParentCategory", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId Int?
 
   children Category[] @relation("ParentCategory")
 
@@ -67,6 +67,8 @@ model Product {
   categories Category[]
 
   specs ProductSpec[]
+
+  variants ProductVariant[]
 }
 
 model ProductSpec {
@@ -85,4 +87,32 @@ model ProductSpecValue {
   value         String
   ProductSpec   ProductSpec? @relation(fields: [productSpecId], references: [id])
   productSpecId Int?
+}
+
+
+model ProductVariant {
+  id Int @id @default(autoincrement())
+
+
+  stock Int @default(0)
+  price Decimal
+  discount Int @default(0)
+  slug String
+  images String[]
+  specs ProductVariantSpec[]
+
+  Product Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
+
+model ProductVariantSpec {
+  id Int @id @default(autoincrement())
+
+  key String
+  value  String
+
+  ProductVariant ProductVariant? @relation(fields: [productVariantId], references: [id])
+  productVariantId Int?
+
 }
