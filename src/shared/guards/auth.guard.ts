@@ -12,10 +12,12 @@ import { UserService } from 'src/modules/user/user.service';
 import { JwtAuthPayload } from './auth-guard.types';
 import { UserRole } from '@prisma/client';
 import { Reflector } from '@nestjs/core';
+import { ClsService } from 'nestjs-cls';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
+    private cls: ClsService,
     private reflector: Reflector,
     private jwtService: JwtService,
     private userService: UserService,
@@ -41,6 +43,7 @@ export class AuthGuard implements CanActivate {
       if (roles && !roles.includes(user.role)) {
         throw new ForbiddenException('Forbidden');
       }
+      this.cls.set('user', user);
 
       return true;
     } catch (error) {
