@@ -3,6 +3,11 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import {
+  i18nValidationErrorFactory,
+  I18nValidationExceptionFilter,
+  I18nValidationPipe,
+} from 'nestjs-i18n';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -11,12 +16,13 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(
-    new ValidationPipe({
+    new I18nValidationPipe({
       whitelist: true,
-      forbidNonWhitelisted: true,
       transform: true,
     }),
   );
+
+  app.useGlobalFilters(new I18nValidationExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('Ecommerce NestJS API')

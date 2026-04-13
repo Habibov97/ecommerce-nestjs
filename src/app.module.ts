@@ -11,6 +11,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
 import { ClsModule } from 'nestjs-cls';
+import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
+import path from 'path';
 
 @Module({
   imports: [
@@ -29,13 +31,21 @@ import { ClsModule } from 'nestjs-cls';
       guard: { mount: true },
       // middleware: { mount: true },
     }),
-    // I18nModule.forRoot({
-    //   fallbackLanguage: 'en',
-    //   loaderOptions: {
-    //     path: path.join(__dirname, '/i18n/'),
-    //     watch: true,
-    //   },
-    // }),
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true,
+      },
+      typesOutputPath: path.join(
+        __dirname,
+        '../src/generated/i18n.generated.ts',
+      ),
+      resolvers: [
+        new QueryResolver(['lang', 'langauge']),
+        new AcceptLanguageResolver(),
+      ],
+    }),
     PrismaModule,
     AuthModule,
     UserModule,

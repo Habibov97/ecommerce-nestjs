@@ -2,6 +2,6 @@
   "response": {
     "created": "User created successfully",
     "updated": "User updated successfully",
-    "notFound": "User with {id} is not found"
+    "notFound": "User with id:{id} is not found"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "isNotEmpty": "Bu sahə boş ola bilməz",
+  "isString": "Bu sahə mətn olmalıdır",
+  "isNumber": "Bu sahə rəqəm olmalıdır",
+  "isInt": "Bu sahə tam ədəd olmalıdır",
+  "isBoolean": "Bu sahə boolean olmalıdır",
+  "isEmail": "Email düzgün formatda deyil",
+  "isUrl": "URL düzgün deyil",
+  "isEnum": "Dəyər icazə verilən variantlardan biri olmalıdır",
+  "isUUID": "UUID formatı düzgün deyil",
+  "isDate": "Tarix düzgün deyil",
+  "min": "Dəyər minimum {constraints.0} olmalıdır",
+  "max": "Dəyər maksimum {constraints.0} olmalıdır",
+  "minLength": "Minimum uzunluq {constraints.0} simvol olmalıdır",
+  "maxLength": "Maksimum uzunluq {constraints.0} simvol olmalıdır",
+  "matches": "Format düzgün deyil",
+  "isPositive": "Dəyər müsbət olmalıdır",
+  "isNegative": "Dəyər mənfi olmalıdır",
+  "arrayNotEmpty": "Array boş ola bilməz",
+  "isArray": "Bu sahə array olmalıdır",
+  "isOptional": "Bu sahə optional-dır"
+}

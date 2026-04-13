@@ -9,6 +9,8 @@ import {
   IsOptional,
   Min,
 } from 'class-validator';
+import { i18nValidationMessage } from 'nestjs-i18n';
+import { I18nTranslations } from 'src/generated/i18n.generated';
 
 export class GetProductListDto {
   @Transform(({ value }) => value?.split(',').map((item) => +item))
@@ -20,7 +22,11 @@ export class GetProductListDto {
 
   @Type()
   @IsInt()
-  @Min(1)
+  @Min(1, {
+    message: i18nValidationMessage<I18nTranslations>('validation.min', {
+      min: 1,
+    }),
+  })
   @IsOptional()
   @ApiProperty({ default: 1, required: false })
   minPrice: number;

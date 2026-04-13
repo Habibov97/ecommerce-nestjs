@@ -1,0 +1,22 @@
+{
+  "isNotEmpty": "This field should not be empty",
+  "isString": "This field must be a string",
+  "isNumber": "This field must be a number",
+  "isInt": "This field must be an integer",
+  "isBoolean": "This field must be a boolean",
+  "isEmail": "Email format is invalid",
+  "isUrl": "URL is invalid",
+  "isEnum": "Value must be one of the allowed options",
+  "isUUID": "UUID format is invalid",
+  "isDate": "Date is invalid",
+  "min": "Value must be at least {constraints.0}",
+  "max": "Value must be at most {constraints.0}",
+  "minLength": "Minimum length is {constraints.0} characters",
+  "maxLength": "Maximum length is {constraints.0} characters",
+  "matches": "Format is invalid",
+  "isPositive": "Value must be positive",
+  "isNegative": "Value must be negative",
+  "arrayNotEmpty": "Array should not be empty",
+  "isArray": "This field must be an array",
+  "isOptional": "This field is optional"
+}
