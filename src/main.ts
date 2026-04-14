@@ -34,6 +34,12 @@ async function bootstrap() {
       description: 'Enter JWT token',
       in: 'header',
     })
+    .addGlobalParameters({
+      name: 'lang',
+      description: 'Language',
+      allowEmptyValue: true,
+      in: 'query',
+    })
     .setDescription('Ecommerce api with nestjs')
     .setVersion('1.0')
     .addTag('ecommerce')

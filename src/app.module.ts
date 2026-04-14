@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-// import { I18nModule } from 'nestjs-i18n';
-// import path from 'path';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './modules/user/user.module';
 import { JwtModule } from '@nestjs/jwt';
@@ -13,6 +11,9 @@ import { ProductModule } from './modules/product/product.module';
 import { ClsModule } from 'nestjs-cls';
 import { AcceptLanguageResolver, I18nModule, QueryResolver } from 'nestjs-i18n';
 import path from 'path';
+
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LanguageInterceptor } from './shared/interceptors/i18n.interceptor';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import path from 'path';
     ClsModule.forRoot({
       global: true,
       guard: { mount: true },
-      // middleware: { mount: true },
+      middleware: { mount: true },
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
@@ -53,6 +54,12 @@ import path from 'path';
     ProductModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LanguageInterceptor,
+    },
+  ],
 })
 export class AppModule {}

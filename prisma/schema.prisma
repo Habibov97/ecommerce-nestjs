@@ -44,10 +44,31 @@ enum UserRole {
   USER
 }
 
+model Translation {
+  id Int @id @default(autoincrement())
+  
+  lang String
+
+  model String
+
+  modelId Int
+
+  field String
+
+  value String
+
+
+  categories Category[] @relation("CategoryTranslation")
+
+  @@unique([lang, model, modelId, field])
+}
+
+
+
 model Category {
   id   Int     @id @default(autoincrement())
-  name String  @unique
-  slug String?
+  
+  translations Translation[] @relation("CategoryTranslation")
 
   parent   Category? @relation("ParentCategory", fields: [parentId], references: [id], onDelete: Cascade)
   parentId Int?
